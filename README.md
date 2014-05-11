@@ -14,9 +14,6 @@ It can also fully use a multiprocessor system to its full power in order
 to speed up the cracking process.
 
 
-[![Build Status](https://api.travis-ci.org/aircrack-ng/aircrack-ng.png)](https://travis-ci.org/aircrack-ng/aircrack-ng)
-
-
 # Building for Android
 
 ## Pre-requisites
