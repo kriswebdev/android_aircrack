@@ -33,7 +33,13 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+
+#ifdef ANDROID
+#include <termios.h>
+#else
 #include <sys/termios.h>
+#endif
+
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -202,8 +208,11 @@ void show_wep_stats( int B, int force, PTW_tableentry table[PTW_KEYHSBYTES][PTW_
 
     if( ioctl( 0, TIOCGWINSZ, &ws ) < 0 )
     {
-        ws.ws_row = 25;
-        ws.ws_col = 80;
+        ws.ws_row = 40;
+        ws.ws_col = 110;
+    } else if (ws.ws_row == 0 && ws.ws_col == 0) {
+        ws.ws_row = 40;
+        ws.ws_col = 110;
     }
 
     if( (chrono( &t_stats, 0 ) < 1.51) && force == 0 )

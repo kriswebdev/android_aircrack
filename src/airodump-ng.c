@@ -112,7 +112,8 @@ char * get_manufacturer_from_string(char * buffer) {
 }
 
 void textcolor(int attr, int fg, int bg)
-{	char command[13];
+{
+	char command[13];
 
 	/* Command is the control command to the terminal */
 	sprintf(command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40);
@@ -121,7 +122,8 @@ void textcolor(int attr, int fg, int bg)
 }
 
 void textcolor_fg(int fg)
-{	char command[13];
+{
+	char command[13];
 
 	/* Command is the control command to the terminal */
 	sprintf(command, "\033[%dm", fg + 30);
@@ -130,7 +132,8 @@ void textcolor_fg(int fg)
 }
 
 void textcolor_bg(int bg)
-{	char command[13];
+{	
+	char command[13];
 
 	/* Command is the control command to the terminal */
 	sprintf(command, "\033[%dm", bg + 40);
@@ -139,7 +142,8 @@ void textcolor_bg(int bg)
 }
 
 void textstyle(int attr)
-{	char command[13];
+{
+	char command[13];
 
 	/* Command is the control command to the terminal */
 	sprintf(command, "\033[%im", attr);
@@ -6464,8 +6468,11 @@ usage:
 
             if( ioctl( 0, TIOCGWINSZ, &(G.ws) ) < 0 )
             {
-                G.ws.ws_row = 25;
-                G.ws.ws_col = 80;
+                G.ws.ws_row = 40;
+                G.ws.ws_col = 110;
+            } else if (G.ws.ws_row == 0 && G.ws.ws_col == 0) {
+                G.ws.ws_row = 40;
+                G.ws.ws_col = 110;
             }
 
             if( G.ws.ws_col <   1 ) G.ws.ws_col =   1;

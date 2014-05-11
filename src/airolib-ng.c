@@ -43,6 +43,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <getopt.h>
+#include <pthread.h>
 
 
 #include "aircrack-ng.h"

@@ -49,11 +49,20 @@ static int ti_do_open_linux(struct tif *ti, char *name)
     int fd_tap;
     struct ifreq if_request;
     struct tip_linux *priv = ti_priv(ti);
-
+#ifdef ANDROID
+    fd_tap = open( name ? name : "/dev/tun", O_RDWR );
+#else
     fd_tap = open( name ? name : "/dev/net/tun", O_RDWR );
+#endif
     if(fd_tap < 0 )
     {
-        printf( "error opening tap device: %s\n", strerror( errno ) );
+        printf( "error opening tap device (named \"%s\"): %s\n",
+#ifdef ANDROID
+    	    (name ? name : "/dev/tun"),
+#else
+    	    (name ? name : "/dev/net/tun"),
+#endif
+    	    strerror( errno ) );
         printf( "try \"modprobe tun\"\n");
         return -1;
     }

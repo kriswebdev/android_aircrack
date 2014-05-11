@@ -40,6 +40,10 @@
 #include <fcntl.h>
 #include <err.h>
 
+#ifdef ANDROID
+#include <pthread.h>
+#endif
+
 #include "aircrack-ng.h"
 #include "version.h"
 #include "aircrack-ptw-lib.h"

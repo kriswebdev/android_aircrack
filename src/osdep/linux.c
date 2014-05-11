@@ -253,13 +253,20 @@ static char * wiToolsPath(const char * tool)
         char * path;
         int i, nbelems;
         static const char * paths [] = {
+#ifdef ANDROID
+                "/system/xbin",
+                "/system/bin",
+                "/system/sbin",
+                "/data/data/com.n01ce.aircrack/xbin",
+#else
                 "/sbin",
                 "/usr/sbin",
                 "/usr/local/sbin",
                 "/bin",
                 "/usr/bin",
                 "/usr/local/bin",
-                "/tmp"
+                "/tmp",
+                "."
         };
 
         nbelems = sizeof(paths) / sizeof(char *);

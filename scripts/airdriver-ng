@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/system/xbin/bash
 
 #  Tool to install/uninstall and patch wireless drivers and 802.11 stacks
 #
@@ -113,7 +113,7 @@ LOGFILE="/var/log/airdriver"
 
 #firmware preparation
 #possible paths, ordered by importance
-FIRMPATHS="/lib/firmware /usr/lib/firmware /lib/hotplug/firmware /usr/local/lib/firmware /usr/firmware"
+FIRMPATHS="/lib/firmware /usr/lib/firmware /lib/hotplug/firmware /usr/local/lib/firmware /usr/firmware /vendor/firmware"
 
 for i in $FIRMPATHS
 do

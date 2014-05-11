@@ -280,17 +280,29 @@
 	#if (AIRCRACK_NG_BYTE_ORDER == AIRCRACK_NG_LITTLE_ENDIAN)
 
 		#ifndef AIRCRACK_NG_BYTE_ORDER_DEFINED
+			#undef  __be64_to_cpu
 			#define __be64_to_cpu(x) ___my_swab64(x)
+			#undef  __be32_to_cpu
 			#define __be32_to_cpu(x) ___my_swab32(x)
+			#undef  __be16_to_cpu
 			#define __be16_to_cpu(x) ___my_swab16(x)
+			#undef  __cpu_to_be64
 			#define __cpu_to_be64(x) ___my_swab64(x)
+			#undef  __cpu_to_be32
 			#define __cpu_to_be32(x) ___my_swab32(x)
+			#undef  __cpu_to_be16
 			#define __cpu_to_be16(x) ___my_swab16(x)
+			#undef  __le64_to_cpu
 			#define __le64_to_cpu(x) (x)
+			#undef  __le32_to_cpu
 			#define __le32_to_cpu(x) (x)
+			#undef  __le16_to_cpu
 			#define __le16_to_cpu(x) (x)
+			#undef  __cpu_to_le64
 			#define __cpu_to_le64(x) (x)
+			#undef  __cpu_to_le32
 			#define __cpu_to_le32(x) (x)
+			#undef  __cpu_to_le16
 			#define __cpu_to_le16(x) (x)
 		#endif
 
