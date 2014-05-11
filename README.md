@@ -59,10 +59,10 @@ The following commands have to be run from the CyanogenMod android source direct
 # Using precompiled binaries
 
 Android:
- * Get these Wireless Extesions binaries (not in this repo): `iwconfig`, `iwconfig` and `iwpriv`
+ * Get these Wireless Extesions binaries (can be found in this repo /bin folder): `iwconfig`, `iwconfig` and `iwpriv`
  * Get Aircrack-ng for Android binaries from this repo /bin folder
  * Install Android SDK tools on your computer
- * Connect your device in USB debugging mode and run:
+ * Connect your Android device in USB debugging mode and run from your computer:
  
     `adb root`
     `adb remount`
