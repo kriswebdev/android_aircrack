@@ -51,7 +51,8 @@
 #include <linux/genetlink.h>
 #endif //CONFIG_LIBNL
 
-#include "radiotap/radiotap-parser.h"
+#include "radiotap/radiotap_iter.h"
+
         /* radiotap-parser defines types like u8 that
          * ieee80211_radiotap.h needs
          *
@@ -60,7 +61,7 @@
          * - since we can't support extensions we don't understand
          * - since linux does not include it in userspace headers
          */
-#include "radiotap/ieee80211_radiotap.h"
+
 #include "osdep.h"
 #include "pcap.h"
 #include "crctable_osdep.h"
@@ -257,8 +258,7 @@ static char * wiToolsPath(const char * tool)
                 "/system/xbin",
                 "/system/bin",
                 "/system/sbin",
-                "/data/data/com.n01ce.aircrack/xbin",
-#else
+#endif
                 "/sbin",
                 "/usr/sbin",
                 "/usr/local/sbin",
@@ -600,6 +600,7 @@ static int linux_read(struct wif *wi, unsigned char *buf, int count,
     unsigned char tmpbuf[4096];
 
 	int caplen, n, got_signal, got_noise, got_channel, fcs_removed;
+    int err;
 
 	caplen = n = got_signal = got_noise = got_channel = fcs_removed = 0;
 
@@ -682,22 +683,21 @@ static int linux_read(struct wif *wi, unsigned char *buf, int count,
 
         rthdr = (struct ieee80211_radiotap_header *) tmpbuf;
 
-        if (ieee80211_radiotap_iterator_init(&iterator, rthdr, caplen) < 0)
+        if (ieee80211_radiotap_iterator_init(&iterator, rthdr, caplen, NULL) < 0)
             return (0);
 
         /* go through the radiotap arguments we have been given
          * by the driver
          */
-
-        while (ri && (ieee80211_radiotap_iterator_next(&iterator) >= 0)) {
-
+        while (ri && !(err = ieee80211_radiotap_iterator_next(&iterator))) {
+	        //printf("DBG: WHILE SWITCH iterator.this_arg_index=%i\n",iterator.this_arg_index);
             switch (iterator.this_arg_index) {
 
             case IEEE80211_RADIOTAP_TSFT:
                 ri->ri_mactime = le64_to_cpu(*((uint64_t*)iterator.this_arg));
                 break;
 
-            case IEEE80211_RADIOTAP_DBM_ANTSIGNAL:
+            case IEEE80211_RADIOTAP_DBM_ANTSIGNAL:	//printf("DBG: IEEE80211_RADIOTAP_DBM_ANTSIGNAL\n");
             	if(!got_signal) {
 					if( *iterator.this_arg < 127 )
 						ri->ri_power = *iterator.this_arg;
@@ -708,7 +708,7 @@ static int linux_read(struct wif *wi, unsigned char *buf, int count,
 				}
                 break;
 
-            case IEEE80211_RADIOTAP_DB_ANTSIGNAL:
+            case IEEE80211_RADIOTAP_DB_ANTSIGNAL:	//printf("DBG: IEEE80211_RADIOTAP_DB_ANTSIGNAL\n");
                 if(!got_signal) {
                     if( *iterator.this_arg < 127 )
                         ri->ri_power = *iterator.this_arg;
@@ -750,7 +750,7 @@ static int linux_read(struct wif *wi, unsigned char *buf, int count,
                 got_channel = 1;
                 break;
 
-            case IEEE80211_RADIOTAP_RATE:
+            case IEEE80211_RADIOTAP_RATE: // printf("DBG: IEEE80211_RADIOTAP_RATE\n");
                 ri->ri_rate = (*iterator.this_arg) * 500000;
                 break;
 

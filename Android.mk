@@ -1,5 +1,5 @@
 # KrisWebDev[n01ce] Android.mk to build aircrack-ng suite for Android
-# Android.mk version: 1.0
+# Android.mk version: 1.1
 
 LOCAL_PATH:=$(call my-dir)
 
@@ -9,22 +9,22 @@ MY_OBJS_PTW		:= src/aircrack-ptw-lib.c
 MY_OBJS_AC		:= src/aircrack-ng.c src/crypto.c src/common.c src/uniqueiv.c $(MY_OBJS_PTW)
 MY_OBJS_AD		:= src/airdecap-ng.c src/crypto.c src/common.c
 MY_OBJS_PF		:= src/packetforge-ng.c src/common.c src/crypto.c
-MY_OBJS_AR		:= src/aireplay-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap-parser.c
-MY_OBJS_ADU		:= src/airodump-ng.c src/common.c src/crypto.c src/uniqueiv.c src/osdep/radiotap/radiotap-parser.c
-MY_OBJS_AT		:= src/airtun-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap-parser.c
+MY_OBJS_AR		:= src/aireplay-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap.c
+MY_OBJS_ADU		:= src/airodump-ng.c src/common.c src/crypto.c src/uniqueiv.c src/osdep/radiotap/radiotap.c
+MY_OBJS_AT		:= src/airtun-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap.c
 MY_OBJS_IV		:= src/ivstools.c src/common.c src/crypto.c src/uniqueiv.c
-MY_OBJS_AS		:= src/airserv-ng.c src/common.c src/osdep/radiotap/radiotap-parser.c
-MY_OBJS_WS		:= src/wesside-ng.c src/crypto.c src/common.c src/osdep/radiotap/radiotap-parser.c $(MY_OBJS_PTW)
-MY_OBJS_BS		:= src/besside-ng.c src/crypto.c src/common.c src/osdep/radiotap/radiotap-parser.c $(MY_OBJS_PTW)
+MY_OBJS_AS		:= src/airserv-ng.c src/common.c src/osdep/radiotap/radiotap.c
+MY_OBJS_WS		:= src/wesside-ng.c src/crypto.c src/common.c src/osdep/radiotap/radiotap.c $(MY_OBJS_PTW)
+MY_OBJS_BS		:= src/besside-ng.c src/crypto.c src/common.c src/osdep/radiotap/radiotap.c $(MY_OBJS_PTW)
 MY_OBJS_BC		:= src/besside-ng-crawler.c
 MY_OBJS_AL		:= src/airolib-ng.c src/crypto.c src/common.c
-MY_OBJS_ES		:= src/easside-ng.c src/common.c src/osdep/radiotap/radiotap-parser.c
+MY_OBJS_ES		:= src/easside-ng.c src/common.c src/osdep/radiotap/radiotap.c
 MY_OBJS_BUDDY		:= src/buddy-ng.c src/common.c
 MY_OBJS_MI		:= src/makeivs-ng.c src/common.c src/uniqueiv.c
-MY_OBJS_AB		:= src/airbase-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap-parser.c
-MY_OBJS_AU		:= src/airdecloak-ng.c src/common.c src/osdep/radiotap/radiotap-parser.c
-MY_OBJS_TT		:= src/tkiptun-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap-parser.c
-MY_OBJS_WC		:= src/wpaclean.c src/osdep/radiotap/radiotap-parser.c
+MY_OBJS_AB		:= src/airbase-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap.c
+MY_OBJS_AU		:= src/airdecloak-ng.c src/common.c src/osdep/radiotap/radiotap.c
+MY_OBJS_TT		:= src/tkiptun-ng.c src/common.c src/crypto.c src/osdep/radiotap/radiotap.c
+MY_OBJS_WC		:= src/wpaclean.c src/osdep/radiotap/radiotap.c
 
 # removed libcrypto_static
 MY_LIBSSL_STATIC	:= 
