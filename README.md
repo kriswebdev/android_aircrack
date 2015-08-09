@@ -1,43 +1,96 @@
-# Aircrack-ng for Android
-This reposiroty is a port of the Aircrack-ng suite (except scripts) for Android.
-This port is done by KrisWebDev and is not "afiliated" with the Aircrack-ng.org team.
+# Introduction
+## Aircrack-ng for Android
+This repository is a port of the Aircrack-ng suite (except scripts) for Android.
+This port is done by [KrisWebDev](https://github.com/kriswebdev) and is not "afiliated" with the Aircrack-ng.org team.
 
-# Aircrack-ng
-Aircrack-ng is an 802.11 WEP and WPA-PSK keys cracking program that can recover
-keys once enough data packets have been captured. It implements the standard FMS
-attack along with some optimizations like KoreK attacks, as well as the
-all-new PTW attack, thus making the attack much faster compared to other WEP
-cracking tools.
+## Aircrack-ng
+> Aircrack-ng is an 802.11 WEP and WPA-PSK keys cracking program that can recover keys once enough data packets have been captured. It implements the standard FMS attack along with some optimizations like KoreK attacks, as well as the PTW attack, thus making the attack much faster compared to other WEP cracking tools.
 
-It can attack WPA1/2 networks with some advanced methods or simply by brute force.
-It can also fully use a multiprocessor system to its full power in order
-to speed up the cracking process.
-
-
-# Building for Android
+# Running Aircrack-ng on Android (precompiled)
 
 ## Pre-requisites
 
-You should use CyanogenMod build system or any similar build system that include those libraries in an /external folder.
+ 1. Device with **WiFi chipset, firmware & driver that supports monitor-mode**
+   * As of mid-2015, only mass-market compatible devices are thoses having dedicated **Broadcom 4329** or **Broadcom 4330** chipsets (**Samsung Galaxy S1, Samsung Galaxy S2, Nexus 7, Huawei Honor**). Bcmon team has developed firmware and driver hacks for these chipsets. More recent devices have WiFi digital signal processed by the ARM CPU (Qualcomm or Samsung) and there is no publicily knowed monitor mode hacks for these devices at this time.
+   * Otherwise, go look for USB WiFi stick known to provide WiFi monitor-mode and injection support on Android.
+ 2. **Wireless extensions** enabled in Android kernel
+  * That's normally bundled with the loaders/kernels below.
+ 3. Monitor-mode **firmware & driver loader**
+   * Broadcom 4329: Bcmon won't load on CyanogenMod > v7 due to the move from bcm4329 driver to bcmdhd. For Galaxy S1, use [PwnAir](http://forum.xda-developers.com/showthread.php?t=2760170) on a KitKat ROM (or port the open source PwnAir kernel to more recent ROM following PwnAir kernel build instructions at the end of the XDA thread).
+   * Broadcom 4330: Use [bcmon app](http://bcmon.blogspot.com/) (not maintained anymore by their owners) to load the monitor-mode firmware and driver.
+ 4. [**Android SDK**](https://developer.android.com/sdk/index.html#Other) platform-tools installed
 
- * OpenSSL development package
- * SQLite development package `>= 3.3.17` (3.6.X version or better is recommended): `libsqlite3-devel`
+## Install
 
-Your device WiFi firmware and driver need to support monitor mode. As of early 2014, the only mass-market compatible devices are the devices having a Broadcom 4329 or 4330 chipsets.
+* Load the monitor-mode firmware/driver
+  * Automated: Install [bcmon app](http://bcmon.blogspot.com/) (bcm4330) or [PwnAir kernel+app](http://forum.xda-developers.com/showthread.php?t=2760170) (Samsung Galaxy S1 with KitKat ROM) and load the monitor-mode firmware/driver.
+  * Manual: [LD_PRELOAD the driver](http://forum.xda-developers.com/showthread.php?t=2405208) (bcm4330) or [port PwnAir kernel](http://forum.xda-developers.com/showthread.php?t=2760170) (bcm4329, check XDA thread build instructions section)
+* Install the [wireless extensions binaries](https://github.com/kriswebdev/android_wireless_tools/tree/master/bin) and [aircrack-ng for android binaries](https://github.com/kriswebdev/android_aircrack/tree/master/bin) on the Android device `/system/xbin/` folder:
+```shell
+    adb root
+    adb remount
+    adb push some-binary /system/xbin/
+```
 
- * Kernel driver in Monitor Mode: check "bcmon" on a search engine.
- * WiFi chipset firmware in Monitor Mode: check "bcmon" on a search engine.
+## Run
 
-Your device needs to have the Wireless Extensions tools `iwconfig`, `iwconfig` and `iwpriv` installed in `/system/xbin` or `/system/bin` (or any other locations listed in osdep/linux.c).
+Check your wireless interface status (should be in "Mode: Monitor"):
+```shell
+adb root
+adb shell iwconfig
+```
 
-## Preparing the build environment
+Check Airodump is working:
+    `adb shell airodump-ng eth0`
+
+Provided your wireless interface is eth0.
+
+If it is working, then check the Aircrack documentation for HowTo.
+
+# Building Aircrack-ng on Android
+
+## Pre-requisites
+
+### Firmware/driver pre-requisite
+
+Same pre-requisites applies as for Running. You still need to have a monitor-mode WiFi kernel/driver installed on your Android system prior to using Aicrack for Android.
+
+### Preparing the build environment
+
+Instructions are made for CyanogenMod platform build system, as it includes all the necessary libraries and tools.
+
+> Warning: Compilation has not been tested on Android NDK system build alone, without all the platform tools. Building only with Android NDK instead of CyanogenMod platform build system would require you to have have at least the following sources located in an folder called "external" (check Android.mk):
+>  * Aircrack-ng for Android (android_aircrack)
+>  * OpenSSL development package (openssl)
+>  * SQLite development package `>= 3.3.17` (3.6.X version or better is recommended): `libsqlite3-devel`
+>  * zlib (or change the Andorid.mk flags to use -LDLIB)
 
  * Follow [Cyanogenmod build guide](http://wiki.cyanogenmod.org/w/Build_Guides) for your device but stop before "brunch".
- * Copy this Aircrack for Android repository content to a directory named "aircrack-ng" in CyanogenMod source root "external" folder.
+ * Copy this Aircrack-ng for Android repository content to a directory named "aircrack-ng" in CyanogenMod source root "external" folder.
 
-## Compilating
+### Building wireless tools binaries
+
+If you also want to build the [Android wireless tools](https://github.com/kriswebdev/android_wireless_tools/) instead of using the Android wireless tools [precompiled binaries](https://github.com/kriswebdev/android_wireless_tools/tree/master/bin), then download and put the [Android wireless tools](https://github.com/kriswebdev/android_wireless_tools/) in CyanogenMod "external" folder and run from the CM source root (`croot`): 
+
+```shell
+. build/envsetup.sh
+breakfast galaxysmtd
+export USE_CCACHE=1
+mka iwconfig
+mka iwpriv
+adb root
+adb remount
+adb push $OUT/system/bin/iwconfig /system/xbin/
+adb push $OUT/system/bin/iwpriv /system/xbin/
+```
+
+And so on for all tools listed in [Android wireless tools Android.mk](https://github.com/kriswebdev/android_wireless_tools/blob/master/Android.mk). Replace galaxysmtd by your device CyanogenMod name.
+
+## Building Aicrack-ng binaries for Android
 
 The following commands have to be run from the CyanogenMod android source directory (croot).
+
+ * Edit `. external/aircrack-ng/make_aircrack.sh` and replace "galaxysmtd" with your device [CyanogenMod code](http://wiki.cyanogenmod.org/w/Devices), should it have any impact at all.
 
  * Compilation:
 
@@ -55,25 +108,15 @@ The following commands have to be run from the CyanogenMod android source direct
 
     `adb shell airodump-ng eth0`
 
-
-# Using precompiled binaries
-
-Android:
- * Get these Wireless Extesions binaries (can be found in this repo /bin folder): `iwconfig`, `iwconfig` and `iwpriv`
- * Get Aircrack-ng for Android binaries from this repo /bin folder
- * Install Android SDK tools on your computer
- * Connect your Android device in USB debugging mode and run from your computer:
- 
-    `adb root`
-    `adb remount`
-    `adb push some-binary /system/xbin/`
-
 # Documentation
 
-Documentation, tutorials, ... can be found on http://www.aircrack-ng.org
+## Aircrack-ng official documentation 
+> Documentation, tutorials, ... can be found on (http://www.aircrack-ng.org)[http://www.aircrack-ng.org]
+> 
+> See also manpages and the forum.
+> 
+> For further information check the [README](README) file.
 
-See also manpages and the forum.
+## Aircrack-ng for Android
 
-For further information check the [README](README) file.
-
-Support Aircrack-ng for Android is done on a yet-to-come XDA thread.
+Support Aircrack-ng for Android is done on [XDA PwnAir thread](http://forum.xda-developers.com/showthread.php?t=2760170) Q&A section] or on the [GitHub repo](https://github.com/kriswebdev/android_aircrack/).ai
