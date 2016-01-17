@@ -50,7 +50,7 @@ If it is working, then check the Aircrack documentation for HowTo.
 
 # Building Aircrack-ng on Android
 
-There is no need to build Aircrack-ng yourself unless you're paranoïd about the binaries I provide. Android Aircrack-ng binaries should work on any Android phone. The hard part about running Aircrack-ng on Android is to load a monitor-mode WiFi firmware & driver that works for your phone or USB WiFi adapter: that's where you should focus your efforts instead.
+There is no need to build Aircrack-ng yourself unless you're paranoïd about the binaries I provide, or unless you want to change/upgrade the Aircrack-ng code. Android Aircrack-ng binaries should work on any Android phone. The hard part about running Aircrack-ng on Android is to load a monitor-mode WiFi firmware & driver that works for your phone or USB WiFi adapter: that's where you should focus your efforts instead.
 
 ## Pre-requisites
 
