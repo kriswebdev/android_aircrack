@@ -114,11 +114,8 @@ The following commands have to be run from the CyanogenMod android source direct
 # Documentation
 
 ## Aircrack-ng official documentation 
-> Documentation, tutorials, ... can be found on (http://www.aircrack-ng.org)[http://www.aircrack-ng.org]
-> 
+> Documentation, tutorials, ... can be found on http://www.aircrack-ng.org
 > See also manpages and the forum.
-> 
-> For further information check the [README](README) file.
 
 ## Aircrack-ng for Android
 
