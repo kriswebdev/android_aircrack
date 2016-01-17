@@ -1,7 +1,7 @@
 # Introduction
 ## Aircrack-ng for Android
-This repository is a port of the Aircrack-ng suite (except scripts) for Android.
-This port is done by [KrisWebDev](https://github.com/kriswebdev) and is not "afiliated" with the Aircrack-ng.org team.
+This repository is a port of the Aircrack-ng 1.2-beta2 suite (except scripts) for Android. It works directly on top of Android.
+This port is done by [KrisWebDev](https://github.com/kriswebdev) and is not "affiliated" with the Aircrack-ng.org team.
 
 ## Aircrack-ng
 > Aircrack-ng is an 802.11 WEP and WPA-PSK keys cracking program that can recover keys once enough data packets have been captured. It implements the standard FMS attack along with some optimizations like KoreK attacks, as well as the PTW attack, thus making the attack much faster compared to other WEP cracking tools.
@@ -10,15 +10,16 @@ This port is done by [KrisWebDev](https://github.com/kriswebdev) and is not "afi
 
 ## Pre-requisites
 
- 1. Device with **WiFi chipset, firmware & driver that supports monitor-mode**
-   * As of mid-2015, only mass-market compatible devices are thoses having dedicated **Broadcom 4329** or **Broadcom 4330** chipsets (**Samsung Galaxy S1, Samsung Galaxy S2, Nexus 7, Huawei Honor**). Bcmon team has developed firmware and driver hacks for these chipsets. More recent devices have WiFi digital signal processed by the ARM CPU (Qualcomm or Samsung) and there is no publicily knowed monitor mode hacks for these devices at this time.
-   * Otherwise, go look for USB WiFi stick known to provide WiFi monitor-mode and injection support on Android.
+ 1. Device with **WiFi chipset, firmware & driver that support monitor-mode**
+   * As of early 2016, only mass-market compatible devices are thoses having dedicated **Broadcom 4329** or **Broadcom 4330** WiFi chipsets (**Samsung Galaxy S1, Samsung Galaxy S2, Nexus 7, Huawei Honor**). Bcmon team has developed firmware and driver hacks for these chipsets. More recent devices have WiFi digital signal processed by the ARM CPU (Qualcomm or Samsung) and there is no publicily knowed monitor mode hacks for these devices at this time.
+   * Otherwise, go look for **USB WiFi adapter** known to provide WiFi monitor-mode and injection support on Android.
  2. **Wireless extensions** enabled in Android kernel
   * That's normally bundled with the loaders/kernels below.
  3. Monitor-mode **firmware & driver loader**
    * Broadcom 4329: Bcmon won't load on CyanogenMod > v7 due to the move from bcm4329 driver to bcmdhd. For Galaxy S1, use [PwnAir](http://forum.xda-developers.com/showthread.php?t=2760170) on a KitKat ROM (or port the open source PwnAir kernel to more recent ROM following PwnAir kernel build instructions at the end of the XDA thread).
    * Broadcom 4330: Use [bcmon app](http://bcmon.blogspot.com/) (not maintained anymore by their owners) to load the monitor-mode firmware and driver.
- 4. [**Android SDK**](https://developer.android.com/sdk/index.html#Other) platform-tools installed
+   * USB WiFi adapter that supports monitor-mode: This completely depends on your USB WiFi adapter and is out of scope of this README. You will need to find and build the driver, along with your ROM kernel, from source. Otherwise you would probably face the *magic version* mismatch issue. As Android kernel is a Linux kernel afterall, you should succeed in compiling the driver from the Linux driver source. Either find a nice HowTo for compiling your USB WiFi adapter driver on a defined Android ROM, or struggle with the driver build guide of your Android ROM. Note that some guides use a chrooted Ubuntu or Kali as an alternative to building a pure Android driver.
+ 4. [**Android SDK**](https://developer.android.com/sdk/index.html#Other) platform-tools installed on your PC (for install)
 
 ## Install
 
@@ -49,6 +50,8 @@ If it is working, then check the Aircrack documentation for HowTo.
 
 # Building Aircrack-ng on Android
 
+There is no need to build Aircrack-ng yourself unless you're paranoïd about the binaries I provide. Android Aircrack-ng binaries should work on any Android phone. The hard part about running Aircrack-ng on Android is to load a monitor-mode WiFi firmware & driver that works for your phone or USB WiFi adapter: that's where you should focus your efforts instead.
+
 ## Pre-requisites
 
 ### Firmware/driver pre-requisite
@@ -65,7 +68,7 @@ Instructions are made for CyanogenMod platform build system, as it includes all 
 >  * SQLite development package `>= 3.3.17` (3.6.X version or better is recommended): `libsqlite3-devel`
 >  * zlib (or change the Andorid.mk flags to use -LDLIB)
 
- * Follow [Cyanogenmod build guide](http://wiki.cyanogenmod.org/w/Build_Guides) for your device but stop before "brunch".
+ * Follow [Cyanogenmod build guide](http://wiki.cyanogenmod.org/w/Build_Guides) for your device but stop before "brunch". You need several GB of disk space and a good Internet connection.
  * Copy this Aircrack-ng for Android repository content to a directory named "aircrack-ng" in CyanogenMod source root "external" folder.
 
 ### Building wireless tools binaries
@@ -119,4 +122,4 @@ The following commands have to be run from the CyanogenMod android source direct
 
 ## Aircrack-ng for Android
 
-Support Aircrack-ng for Android is done on [XDA PwnAir thread](http://forum.xda-developers.com/showthread.php?t=2760170) Q&A section] or on the [GitHub repo](https://github.com/kriswebdev/android_aircrack/).ai
+Support Aircrack-ng for Android is done on [XDA PwnAir thread](http://forum.xda-developers.com/showthread.php?t=2760170) Q&A section or on the [GitHub repo](https://github.com/kriswebdev/android_aircrack/).
