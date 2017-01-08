@@ -11,7 +11,7 @@ This port is done by [KrisWebDev](https://github.com/kriswebdev) and is not "aff
 ## Pre-requisites
 
  1. Device with **WiFi chipset, firmware & driver that support monitor-mode**
-   * As of early 2016, only mass-market compatible devices are thoses having dedicated **Broadcom 4329** or **Broadcom 4330** WiFi chipsets (**Samsung Galaxy S1, Samsung Galaxy S2, Nexus 7, Huawei Honor**). Bcmon team has developed firmware and driver hacks for these chipsets. More recent devices have WiFi digital signal processed by the ARM CPU (Qualcomm or Samsung) and there is no publicily knowed monitor mode hacks for these devices at this time.
+   * As of early 2016, only mass-market compatible devices are thoses having dedicated **Broadcom 4329** or **Broadcom 4330** WiFi chipsets (**Samsung Galaxy S1, Samsung Galaxy S2, Nexus 7, Huawei Honor**). Bcmon team has developed firmware and driver hacks for these chipsets. More recent devices have WiFi digital signal processed by the ARM CPU (Qualcomm or Samsung) and there is no publicily known monitor mode hacks for these devices at this time.
    * Otherwise, go look for **USB WiFi adapter** known to provide WiFi monitor-mode and injection support on Android.
  2. **Wireless extensions** enabled in Android kernel
   * That's normally bundled with the loaders/kernels below.
